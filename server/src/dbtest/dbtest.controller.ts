@@ -1,3 +1,5 @@
+import { VarArgsDtoPipe } from './dbuser/custompipes/varargs.dto.pipe';
+import { VarArgsDto } from './dbuser/dto/varargs.dto';
 import { DBUserEntity } from './dbuser/entities/dbuser.entity';
 import { UserDTOToUserEntityPipe } from './dbuser/custompipes/userdto.to.userentity.pipe';
 import { Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Query, HttpStatus, Body, Post } from "@nestjs/common";
@@ -51,6 +53,11 @@ export class DBTestController {
     @Get('arrayquery')
     async testArrayPipeQuery(@Query('array', new ParseArrayPipe({ errorHttpStatusCode: HttpStatus.BAD_GATEWAY })) array: any[]) {
         return { value: array };
+    };
+
+    @Get('varargs/user/:username')
+    async testVarArgsDto(@Param(new VarArgsDtoPipe()) params: VarArgsDto): Promise<{ result: string}> {
+        return { result: "success"};
     };
 
     /*
