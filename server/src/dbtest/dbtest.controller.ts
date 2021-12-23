@@ -1,4 +1,4 @@
-import { UserEntity } from './../user/entities/user.entity';
+import { DBUserEntity } from './dbuser/entities/dbuser.entity';
 import { UserDTOToUserEntityPipe } from './dbuser/custompipes/userdto.to.userentity.pipe';
 import { Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Query, HttpStatus, Body, Post } from "@nestjs/common";
 
@@ -60,7 +60,7 @@ export class DBTestController {
     */
 
     @Post('toentity')
-    async testConvertUserDTOToUserEntity(@Body(new UserDTOToUserEntityPipe()) user: UserEntity) {
+    async testConvertUserDTOToUserEntity(@Body(new UserDTOToUserEntityPipe()) user: DBUserEntity) {
         return user;
     }
 
