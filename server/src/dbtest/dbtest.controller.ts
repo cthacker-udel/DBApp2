@@ -1,11 +1,17 @@
-import { Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe } from "@nestjs/common";
+import { Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Query, HttpStatus } from "@nestjs/common";
 
 
 
 @Controller('db')
 export class DBTestController {
 
-    @Get('/pipeint/:int')
+    /*
+
+    Primitive type testing
+
+    */
+
+    @Get('pipeint/:int')
     async testIntegerPipe(@Param('int', ParseIntPipe) int: number) {
         return { value: int };
     };
@@ -25,4 +31,30 @@ export class DBTestController {
         return { value: array };
     };
 
-}
+    @Get('intquery')
+    async testIntegerPipeQuery(@Query('int', ParseIntPipe) int: number) {
+        return { value: int };
+    };
+
+    @Get('floatquery')
+    async testFloatPipeQuery(@Query('float', new ParseFloatPipe({ errorHttpStatusCode: HttpStatus.I_AM_A_TEAPOT })) float: number) {
+        return { value: float };
+    };
+
+    @Get('boolquery')
+    async testBoolPipeQuery(@Query('bool', new ParseBoolPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) bool: boolean ) {
+        return { value: bool };
+    };
+
+    @Get('arrayquery')
+    async testArrayPipeQuery(@Query('array', new ParseArrayPipe({ errorHttpStatusCode: HttpStatus.BAD_GATEWAY })) array: any[]) {
+        return { value: array };
+    };
+
+    /*
+
+    Object testing
+
+    */
+
+};
