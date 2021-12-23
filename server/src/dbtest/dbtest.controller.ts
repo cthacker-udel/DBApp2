@@ -2,12 +2,15 @@ import { VarArgsDtoPipe } from './dbuser/custompipes/varargs.dto.pipe';
 import { VarArgsDto } from './dbuser/dto/varargs.dto';
 import { DBUserEntity } from './dbuser/entities/dbuser.entity';
 import { UserDTOToUserEntityPipe } from './dbuser/custompipes/userdto.to.userentity.pipe';
-import { Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Query, HttpStatus, Body, Post } from "@nestjs/common";
+import { Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Query, HttpStatus, Body, Post, Inject, CACHE_MANAGER } from "@nestjs/common";
+import { Cache } from 'cache-manager';
 
 
 
 @Controller('db')
 export class DBTestController {
+
+    constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {};
 
     /*
 
@@ -17,6 +20,11 @@ export class DBTestController {
 
     @Get('pipeint/:int')
     async testIntegerPipe(@Param('int', ParseIntPipe) int: number) {
+        // const result = await this.cacheManager.get('value');
+        // if (result !== null) {
+        //     console.log('cached value = ', result);
+        // }
+        // await this.cacheManager.set('value', int, { ttl: 0});
         return { value: int };
     };
 
@@ -59,6 +67,11 @@ export class DBTestController {
     async testVarArgsDto(@Param(new VarArgsDtoPipe()) params: VarArgsDto): Promise<{ result: string}> {
         return { result: "success"};
     };
+
+    @Get('/arraypipeseparator1')
+    async testArrayPipeSeparator(@Query('array', new ParseArrayPipe({ items: String, separator: 'helloworld' })) array: string[]) {
+        return { value : array };
+    }
 
     /*
 

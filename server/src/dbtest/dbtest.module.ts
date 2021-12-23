@@ -1,11 +1,12 @@
+import { AppModule } from './../app.module';
 import { DBTestController } from './dbtest.controller';
 import { DBTestService } from './dbtest.service';
-import { Module } from "@nestjs/common";
+import { CacheModule, Module } from "@nestjs/common";
 
 
 
 @Module({
-    imports: [],
+    imports: [CacheModule.register()],
     exports: [DBTestService],
     providers: [DBTestService],
     controllers: [DBTestController]
