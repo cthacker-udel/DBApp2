@@ -5,11 +5,6 @@ import { Column, Entity, ObjectIdColumn } from "typeorm";
 @Entity()
 export class DBUserEntity {
 
-    constructor(newUser: string, newPass: string) {
-        this.username = newUser;
-        this.password = newPass;
-    };
-
     @ObjectIdColumn()
     id: string
 
