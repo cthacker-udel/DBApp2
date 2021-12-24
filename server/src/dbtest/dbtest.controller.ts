@@ -2,8 +2,10 @@ import { VarArgsDtoPipe } from './dbuser/custompipes/varargs.dto.pipe';
 import { VarArgsDto } from './dbuser/dto/varargs.dto';
 import { DBUserEntity } from './dbuser/entities/dbuser.entity';
 import { UserDTOToUserEntityPipe } from './dbuser/custompipes/userdto.to.userentity.pipe';
-import { Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Query, HttpStatus, Body, Post, Inject, CACHE_MANAGER } from "@nestjs/common";
+import { Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Query, HttpStatus, Body, Post, Inject, CACHE_MANAGER, UseGuards, SetMetadata } from "@nestjs/common";
 import { Cache } from 'cache-manager';
+import { ExampleGuard } from './dbuser/guards/dbtest.exampleguard.guard';
+import { Roles } from './dbuser/roles/roles.decorator';
 
 
 
@@ -82,6 +84,24 @@ export class DBTestController {
     @Post('toentity')
     async testConvertUserDTOToUserEntity(@Body(new UserDTOToUserEntityPipe()) user: DBUserEntity) {
         return user;
+    }
+
+    /*
+
+    Guard testing
+
+    */
+
+    @Get('addadminmetadata')
+    @Roles('admin')
+    async setAdminMetadata(){
+        return { value: 'Setted admin metadata'}
+    };
+
+    @Get('testguard')
+    @UseGuards(ExampleGuard)
+    async testGuards(){
+        return { value: 'Request processed'};
     }
 
 
