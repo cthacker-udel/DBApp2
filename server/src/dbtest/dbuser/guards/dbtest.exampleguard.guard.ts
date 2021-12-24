@@ -12,14 +12,22 @@ export class ExampleGuard implements CanActivate{
 
         const roles = this.reflector.get<string[]>('roles', context.getHandler());
 
-        const overriddenRoles = this.reflector.getAllAndOverride<string[]>('roles', [ context.getHandler(), context.getClass() ]);
+        if (roles) {
 
-        const mergedRoles = this.reflector.getAllAndMerge<string[]>('roles', [ context.getHandler(), context.getClass() ]);
+            console.log('roles = ', roles);
 
-        if (!roles.includes('admin')) {
+            const overriddenRoles = this.reflector.getAllAndOverride<string[]>('roles', [ context.getHandler(), context.getClass() ]);
+
+            const mergedRoles = this.reflector.getAllAndMerge<string[]>('roles', [ context.getHandler(), context.getClass() ]);
+
+            if (!roles.includes('admin')) {
+                return false;
+            }
+            return true;
+
+        } else {
             return false;
         }
-        return true;
     };
 
 };

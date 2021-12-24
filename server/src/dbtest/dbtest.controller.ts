@@ -101,7 +101,7 @@ export class DBTestController {
     @Get('testguard')
     @UseGuards(ExampleGuard)
     async testGuards(){
-        return { value: 'Request processed'};
+        return { value: 'Logging in'};
     }
 
 
