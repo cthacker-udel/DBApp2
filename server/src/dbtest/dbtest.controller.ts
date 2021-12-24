@@ -2,10 +2,11 @@ import { VarArgsDtoPipe } from './dbuser/custompipes/varargs.dto.pipe';
 import { VarArgsDto } from './dbuser/dto/varargs.dto';
 import { DBUserEntity } from './dbuser/entities/dbuser.entity';
 import { UserDTOToUserEntityPipe } from './dbuser/custompipes/userdto.to.userentity.pipe';
-import { Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Query, HttpStatus, Body, Post, Inject, CACHE_MANAGER, UseGuards, SetMetadata } from "@nestjs/common";
+import { Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Query, HttpStatus, Body, Post, Inject, CACHE_MANAGER, UseGuards, SetMetadata, UseInterceptors } from "@nestjs/common";
 import { Cache } from 'cache-manager';
 import { ExampleGuard } from './dbuser/guards/dbtest.exampleguard.guard';
 import { Roles } from './dbuser/roles/roles.decorator';
+import { DBUserInterceptor } from './dbuser/interceptors/dbuser.interceptor';
 
 
 
@@ -93,6 +94,7 @@ export class DBTestController {
     */
 
     @Get('addadminmetadata')
+    @UseInterceptors(DBUserInterceptor)
     @Roles('admin')
     async setAdminMetadata(){
         return { value: 'Setted admin metadata'}
