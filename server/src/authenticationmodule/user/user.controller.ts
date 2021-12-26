@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Param, Post, UsePipes } from "@nestjs/common";
+import { AuthUserDto } from "./dto/AuthUser.dto";
 import { AuthUserEntity } from "./entities/AuthUser.entity";
 import { AuthUserService } from "./user.service";
+import { ValidPostPipe } from "./valid.id.pipe/valid.post.pipe";
 import { ValidIdPipe } from "./valid.id.pipe/valididpipe.pipe";
 
 
@@ -10,15 +12,14 @@ export class AuthUserController {
     constructor (private readonly userService: AuthUserService){}
 
     @Get(':id')
-    @UsePipes(ValidIdPipe)
-    async returnUser(@Param('id') id: AuthUserEntity): Promise<AuthUserEntity> {
+    async returnUser(@Param('id', ValidIdPipe) id: AuthUserEntity): Promise<AuthUserEntity> {
         return id;
     };
 
-    @Post()
-    @UsePipes(ValidPostPipe)
-    async addUser(@Body() person: AuthUserDto) {
-
-    } 
+    @Post('add')
+    async addUser(@Body(ValidPostPipe) person: AuthUserDto) {
+        console.log("before calling service");
+        return this.userService.insertUser(person);
+    };
 
 };
