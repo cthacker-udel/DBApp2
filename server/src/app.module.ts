@@ -1,12 +1,8 @@
-import { TestModule } from './dbtest/_test_/test.module';
-import { DBTestModule } from './dbtest/dbtest.module';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { AuthUserModule } from './authenticationmodule/user/user.module';
 
 @Module({
-  imports: [],
+  imports: [AuthUserModule],
   controllers: [],
   providers: [],
 })
