@@ -18,7 +18,6 @@ export class AuthUserController {
 
     @Post('add')
     async addUser(@Body(ValidPostPipe) person: AuthUserDto) {
-        console.log("before calling service");
         return this.userService.insertUser(person);
     };
 

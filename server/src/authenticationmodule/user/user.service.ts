@@ -8,11 +8,14 @@ import { AuthUserEntity } from "./entities/AuthUser.entity";
 @Injectable()
 export class AuthUserService {
 
-    async getUserById(id: string): Promise<AuthUserEntity | undefined> {
+    async getUserById(id: string): Promise<AuthUserEntity> {
+        console.log("calling service with : ", id);
         const mongoManager = getMongoManager("mongo");
-        const result = await mongoManager.findOne<AuthUserEntity>(AuthUserEntity, {
-            username: id
+        console.log("before calling mongo service");
+        const result = await mongoManager.findOne(AuthUserEntity, {
+            username: id.trim()
         });
+        console.log("before returning result");
         return result;
     };
 
@@ -21,4 +24,4 @@ export class AuthUserService {
         await mongoManager.save(plainToClass(AuthUserEntity, user));
     };
 
-}
+};
