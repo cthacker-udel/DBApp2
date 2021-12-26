@@ -8,6 +8,9 @@ export class AuthUserService {
     async getUserById(id: string){
 
         const mongoManager = getMongoManager("mongo");
+        mongoManager.findOne({
+            
+        })
 
     }
 
