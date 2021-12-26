@@ -1,5 +1,5 @@
 import { AuthUserService } from './../user.service';
-import { ArgumentMetadata, Injectable, PipeTransform } from "@nestjs/common";
+import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from "@nestjs/common";
 
 
 
@@ -8,10 +8,13 @@ export class ValidIdPipe implements PipeTransform {
 
     constructor (private readonly userService: AuthUserService){}
 
-    transform(value: string, metadata: ArgumentMetadata) {
+    async transform(value: string, metadata: ArgumentMetadata) {
 
-        this.userService.getUserById(value);
+        const result = this.userService.getUserById(value);
+        if (await result === undefined) {
+            throw new BadRequestException('User does not exist in database');
+        }
+        return result;
+    };
 
-    }
-
-}
+};
