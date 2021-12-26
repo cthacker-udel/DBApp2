@@ -14,7 +14,7 @@ export class TestController {
     @IntPipeDecorator('metadata1', 'metadata2')
     async testIntPipe() {
 
-
+        
 
     }
 
