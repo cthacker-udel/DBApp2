@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { AuthUserModule } from "../user.module";
 import { AuthServiceController } from "./authservice.controller";
@@ -9,7 +10,7 @@ import { AuthServiceLocalPassportStrategy } from "./passport.authservice/auth.lo
 
 @Module({
 
-    imports: [AuthUserModule, PassportModule],
+    imports: [AuthUserModule, PassportModule, JwtModule],
     exports: [AuthServiceModule],
     controllers: [AuthServiceController],
     providers: [AuthService, AuthServiceLocalPassportStrategy]
