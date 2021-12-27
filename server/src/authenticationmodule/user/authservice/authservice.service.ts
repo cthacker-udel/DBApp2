@@ -12,9 +12,11 @@ export class AuthService {
 
         const findUser = await this.userService.getUserById(username); 
         const user: AuthUserEntity = findUser[0];
-        const { password , ...result } = user;
-        if (username === user.username && pass === user.password) {
-            return { value: "login succeeded" };
+        if (user) {
+            const { password , ...result } = user;
+            if (username === user.username && pass === user.password) {
+                return { value: "login succeeded" };
+            }
         }
         return null;
         
