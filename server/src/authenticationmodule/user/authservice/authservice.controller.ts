@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './authservice.service';
+import { JwtAuthGurad } from './jwtstrategy/jwt.auth.guard';
 import { LocalAuthServiceStrategy } from './passport.authservice/localstrategy.strategy';
 
 
@@ -14,6 +15,12 @@ export class AuthServiceController {
     @Post('login')
     async loginUser(@Request() request) {
         return this.authService.login(request.user);
+    }
+    
+    @UseGuards(JwtAuthGurad)
+    @Get('password')
+    getPassword(@Request() req) {
+        return req.user;
     }
 
 };
