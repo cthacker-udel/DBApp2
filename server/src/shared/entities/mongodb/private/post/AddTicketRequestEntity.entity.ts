@@ -6,12 +6,12 @@ export class AddTicketRequestEntity {
     @ObjectIdColumn()
     id: ObjectID;
 
-    @PrimaryGeneratedColumn({ type: "number"})
+    @PrimaryGeneratedColumn({ type: "number" })
     ticketNum: number;
 
-    @Column({ default: "Default Subject", type: "string"})
+    @Column({ default: "Default Subject", type: "string" })
     subject: string;
 
-    @Column({ default: new Date().toISOString(), type: "string"})
+    @Column({ default: new Date().toISOString(), type: "string" })
     date: string;
 };

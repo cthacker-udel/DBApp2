@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { AddTicketRequestDTO } from "src/shared/api/private/post/AddTicketRequest.dto";
-import { AddTicketRequestEntity } from "src/shared/entities/mongodb/private/AddTicketRequestEntity.entity";
+import { FindTicketRequestEntity } from "src/shared/entities/mongodb/private/get/FindTicketRequest.entity";
+import { AddTicketRequestEntity } from "src/shared/entities/mongodb/private/post/AddTicketRequestEntity.entity";
 import { EntityTarget, getConnection, getMongoManager } from "typeorm";
 
 @Injectable()
@@ -13,10 +14,17 @@ export class DataService {
         try{
             mongoRepo.insert(addTicket);
         } catch (err) {
-            throw new BadRequestException('Invalid Post Request');
+            throw new BadRequestException('Invalid Create Ticket Request');
         }
     };
 
-    async findTicket(findTicket)
+    async findTicket(findTicket: FindTicketRequestEntity) {
+        const mongoRepo = this.getMongoRepo<FindTicketRequestEntity>(FindTicketRequestEntity);
+        try{
+            mongoRepo.find(findTicket);
+        } catch (err) {
+            throw new BadRequestException('Invalid search for ticket');
+        }
+    }
 
 };
