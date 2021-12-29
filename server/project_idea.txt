@@ -16,3 +16,12 @@ receiver: string <---- user that is receiving the updates on the ticket
 status: string <----- status of ticket
 date: string <---- date ticket was created/last updated
 priority: number <---- priority of ticket ( number ranked, 1: highest, 4: lowest)
+
+
+DATA_MODULE
+
+BASIC CRUD
+
+Add ticket
+bulk add ticket
+

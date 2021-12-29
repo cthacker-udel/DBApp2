@@ -15,6 +15,8 @@ export class DataService {
         } catch (err) {
             throw new BadRequestException('Invalid Post Request');
         }
-    }
+    };
+
+    async findTicket(findTicket)
 
 };
