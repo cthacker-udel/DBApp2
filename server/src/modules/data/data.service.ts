@@ -1,5 +1,5 @@
+import { DeleteTicketRequestEntity } from './../../shared/entities/mongodb/private/delete/DeleteTicketRequest.entity';
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { AddTicketRequestDTO } from "src/shared/api/private/post/AddTicketRequest.dto";
 import { FindTicketRequestEntity } from "src/shared/entities/mongodb/private/get/FindTicketRequest.entity";
 import { AddTicketRequestEntity } from "src/shared/entities/mongodb/private/post/AddTicketRequestEntity.entity";
 import { EntityTarget, getConnection, getMongoManager } from "typeorm";
@@ -23,7 +23,16 @@ export class DataService {
         try{
             mongoRepo.find(findTicket);
         } catch (err) {
-            throw new BadRequestException('Invalid search for ticket');
+            throw new BadRequestException('Invalid Find Ticket Request');
+        }
+    };
+
+    async deleteTicket(deleteTicket: DeleteTicketRequestEntity) {
+        const mongoRepo = this.getMongoRepo<DeleteTicketRequestEntity>(DeleteTicketRequestEntity);
+        try{
+            mongoRepo.delete(deleteTicket);
+        } catch (error) {
+            throw new BadRequestException('Invalid Delete Ticket Request');
         }
     }
 
