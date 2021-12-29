@@ -1,15 +1,12 @@
-import { MongoCredentials } from './../config/mongo/MongoCredentials';
 import { NestFactory } from '@nestjs/core';
 import { ConnectionOptions, createConnection } from 'typeorm';
 import { AppModule } from './app.module';
 const cors = require('cors');
+const development = require('../config/development.json');
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
 
-    const connection = await createConnection(
-        {...MongoCredentials as ConnectionOptions}
-    );
+    const app = await NestFactory.create(AppModule);
 
     app.enableCors();
     app.use(cors());
