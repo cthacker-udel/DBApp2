@@ -17,8 +17,7 @@ async function bootstrap() {
         host: configService.get('mongo')['host'],
         url: configService.get('mongo')['url'],
         entities: configService.get('mongo')['entities']
-    })
-
+    });
 
     app.enableCors();
     app.use(cors());

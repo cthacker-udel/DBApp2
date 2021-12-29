@@ -1,0 +1,18 @@
+Ticketing system
+
+_______ DATA _______
+
+TO START:
+
+ticketNum: string <--- ticket #
+subject: string
+date: string
+
+Finalized:
+
+ticketNum: number <---- ticket number
+requester: string <---- user that is requesting the ticket
+receiver: string <---- user that is receiving the updates on the ticket
+status: string <----- status of ticket
+date: string <---- date ticket was created/last updated
+priority: number <---- priority of ticket ( number ranked, 1: highest, 4: lowest)
