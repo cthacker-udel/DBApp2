@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AuthServiceModule } from './authenticationmodule/user/authservice/authservice.module';
-import { AuthUserModule } from './authenticationmodule/user/user.module';
-
+import { ConfigModule } from '@nestjs/config';
+import configuration from './shared/config/configuration';
 @Module({
-  imports: [AuthServiceModule],
+  imports: [ConfigModule.forRoot({
+      load: [configuration]
+  })],
   controllers: [],
   providers: [],
 })
