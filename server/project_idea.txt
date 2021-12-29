@@ -4,7 +4,7 @@ _______ DATA _______
 
 TO START:
 
-ticketNum: string <--- ticket #
+ticketNum: number <--- ticket #
 subject: string
 date: string
 
