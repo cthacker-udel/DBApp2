@@ -1,9 +1,14 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { DataService } from './data.service';
+import { FindTicketPipe } from './pipeline/findticket.pipe';
+import { Body, Controller, Get, Param, Post, UsePipes } from "@nestjs/common";
+import { FindTicketRequestEntity } from 'src/shared/entities/mongodb/private/get/FindTicketRequest.entity';
 
 
 
 @Controller('/api')
 export class DataController {
+
+    constructor(private readonly dataService: DataService){}
 
     @Get('/public/number_of_tickets/total')
     async getNumberOfTickets() {
@@ -23,6 +28,13 @@ export class DataController {
     @Get('/public/number_of_tickets/priority/:number')
     async getNumberOfTicketsPriority(@Param('number') number: string) {
         // passes number as string, gather number of tickets with set priority
+    };
+
+    // will use guards, but for now
+    @UsePipes(FindTicketPipe)
+    @Post('/private/ticket/find_ticket')
+    async findTicket(@Body() body: FindTicketRequestEntity) {
+        await this.dataService.findTicket(body);
     };
 
 };
