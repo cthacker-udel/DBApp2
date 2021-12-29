@@ -1,11 +1,8 @@
-import { IsAlpha, IsNotEmpty, IsNumber, IsString, Min } from "class-validator";
+import { IsAlpha, IsAlphanumeric, IsDate, IsNotEmpty, isNotEmpty, IsNumber, IsString } from "class-validator";
 
-
-
-export class AddTicketRequestDTO {
+export class FindTicketRequestDTO {
 
     @IsNumber()
-    @Min(1)
     ticketNum: number;
 
     @IsString()
@@ -14,9 +11,7 @@ export class AddTicketRequestDTO {
     subject: string;
 
     @IsString()
-    @IsAlpha()
     @IsNotEmpty()
     date: string;
-
 
 };
