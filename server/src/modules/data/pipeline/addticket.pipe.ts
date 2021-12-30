@@ -4,18 +4,13 @@ import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from
 import { AddTicketRequestDTO } from "src/shared/api/private/post/AddTicketRequest.dto";
 import { AddTicketRequestEntity } from "src/shared/entities/mongodb/private/post/AddTicketRequestEntity.entity";
 
-
-
-
 @Injectable()
 export class AddTicketPipe implements PipeTransform {
 
-    transform(value: AddTicketRequestEntity, metadata: ArgumentMetadata) {
-
-        const convertedDto: AddTicketRequestDTO = plainToClass(AddTicketRequestDTO, value);
+    transform(value: AddTicketRequestDTO, metadata: ArgumentMetadata) {
         try {
-            validateOrReject(convertedDto);
-            return plainToClass(AddTicketRequestEntity, convertedDto);
+            validateOrReject(value);
+            return plainToClass(AddTicketRequestEntity, value);
         } catch (error) {
             throw new BadRequestException("Invalid Add Ticket Request sent -- failed at pipe");
         }
