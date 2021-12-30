@@ -30,6 +30,12 @@ export class DataController {
         // passes number as string, gather number of tickets with set priority
     };
 
+    /*
+
+    PRIVATE ENDPOINTS
+
+    */
+
     // will use guards, but for now
     @UsePipes(FindTicketPipe)
     @Post('/private/ticket/find_ticket')
