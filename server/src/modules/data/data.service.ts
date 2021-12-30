@@ -34,6 +34,8 @@ export class DataService {
         } catch (error) {
             throw new BadRequestException('Invalid Delete Ticket Request');
         }
-    }
+    };
+
+    async updateTicket(updateTicket: )
 
 };
