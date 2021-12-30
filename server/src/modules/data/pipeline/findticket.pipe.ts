@@ -8,11 +8,11 @@ import { validateOrReject } from 'class-validator';
 @Injectable()
 export class FindTicketPipe implements PipeTransform{
 
-    async transform(value: FindTicketRequestDTO, metadata: ArgumentMetadata) {
-        const ConvertedToEntity = plainToClass(FindTicketRequestEntity, value);
+    async transform(value: FindTicketRequestEntity, metadata: ArgumentMetadata) {
+        const ConvertedToDTO = plainToClass(FindTicketRequestDTO, value);
         try {
-            await validateOrReject(ConvertedToEntity);
-            return ConvertedToEntity;
+            await validateOrReject(ConvertedToDTO);
+            return plainToClass(FindTicketRequestEntity, ConvertedToDTO);
         } catch (errors) {
             throw new BadRequestException("Invalid DTO Object sent when looking for ticket");
         }
