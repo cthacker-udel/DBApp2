@@ -1,22 +1,16 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
 import { IsString, IsNotEmpty, IsAlphanumeric, IsAscii, MinLength, MaxLength } from 'class-validator';
 
 @Entity()
 export class UserEntity {
+    
+    @ObjectIdColumn()
+    id: ObjectID;
 
-    @IsString()
-    @IsAlphanumeric()
-    @IsNotEmpty()
-    @IsAscii()
-    @MinLength(1)
-    @MaxLength(20)
+    @Column({ default: "Default Username", type: "string"})
     username: string;
 
-    @IsString()
-    @IsAscii()
-    @IsAlphanumeric()
-    @MinLength(1)
-    @MaxLength(20)
+    @Column({ default: "Password", type: "string"})
     password: string;
 
 };

@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { Request } from 'express';
 import Alphabet from 'src/shared/constants/Alphabet';
 
 @Injectable()
 export class EncryptionService{
 
     constructor(private readonly configService: ConfigService) {}
+
+    async checkUsername(request: Request) {
+        request.body
+    }
 
     async encrypt_caesar(password: string) {
 
