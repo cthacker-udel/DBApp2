@@ -7,17 +7,19 @@ import { Request } from 'express';
 import Alphabet from 'src/shared/constants/Alphabet';
 import { FindUserRequestDTO } from 'src/shared/api/private/get/FindUserRequest.dto';
 import { DecryptionService } from '../decrypt/decrypt.auth.service';
+import { DataService } from 'src/modules/data/data.service';
 
 @Injectable()
 export class EncryptionService{
 
-    constructor(private readonly configService: ConfigService, private readonly decryptService: DecryptionService) {}
+    constructor(private readonly configService: ConfigService, private readonly decryptService: DecryptionService, private readonly dataService: DataService) {}
 
     async checkUsername(request: Request): Promise<boolean> {
         const convertedUserName = plainToClass(FindUserRequestDTO, request.body);
         try{
             validateOrReject(convertedUserName);
             const userName = this.decryptService.decrypt_caesar(convertedUserName.username);
+            const searchResult = this.dataService.findUser // TODO: Add findUser implementation
             return true;
         } catch (error) {
             throw new UnauthorizedException('Invalid credentials to execute user lookup');
