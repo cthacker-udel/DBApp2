@@ -1,15 +1,27 @@
+import { UnauthorizedException } from '@nestjs/common';
+import { validateOrReject } from 'class-validator';
+import { plainToClass } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import Alphabet from 'src/shared/constants/Alphabet';
+import { FindUserRequestDTO } from 'src/shared/api/private/get/FindUserRequest.dto';
+import { DecryptionService } from '../decrypt/decrypt.auth.service';
 
 @Injectable()
 export class EncryptionService{
 
-    constructor(private readonly configService: ConfigService) {}
+    constructor(private readonly configService: ConfigService, private readonly decryptService: DecryptionService) {}
 
-    async checkUsername(request: Request) {
-        request.body
+    async checkUsername(request: Request): Promise<boolean> {
+        const convertedUserName = plainToClass(FindUserRequestDTO, request.body);
+        try{
+            validateOrReject(convertedUserName);
+            const userName = this.decryptService.decrypt_caesar(convertedUserName.username);
+            return true;
+        } catch (error) {
+            throw new UnauthorizedException('Invalid credentials to execute user lookup');
+        }
     }
 
     async encrypt_caesar(password: string) {

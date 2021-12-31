@@ -18,4 +18,4 @@ export class FindUserRequestDTO {
     @MaxLength(20)
     password: string;
 
-}
+};
