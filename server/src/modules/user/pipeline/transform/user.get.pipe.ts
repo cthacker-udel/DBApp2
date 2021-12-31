@@ -13,7 +13,9 @@ export class UserGetPipe implements PipeTransform {
 
         const convertedDto = plainToClass(FindUserRequestDTO, value.body);
         try {
-            validateOrReject(convertedDto);
+            validateOrReject(convertedDto).catch(errors => {
+                console.log('errors = ', errors);
+            });
             return convertedDto;
         } catch (error) {
             throw new UnauthorizedException('Unauthorized access of find user request');
