@@ -9,7 +9,7 @@ export class EncryptionService{
 
     async encrypt_caesar(password: string) {
 
-        const shiftAmount = parseInt(this.configService.get('caesar'), 10);
+        const shiftAmount = this.configService.get<number>('caesar');
         let emptyString: string = "";
         for (let i = 0; i < password.length; i++) {
 
@@ -29,6 +29,37 @@ export class EncryptionService{
 
         }
         return emptyString;
+
+    }
+
+
+    async encrypt_autokey(password: string) {
+
+        const autoKeyConst = this.configService.get<string>('autokey').toUpperCase();
+        password = password.replace(new RegExp('\W'),'').toUpperCase();
+
+        let emptystring: string = "";
+
+        const keyIndex = 0;
+        const passIndex = 0;
+        let genIndexKey = 0;
+        let genIndexPass = 0;
+        while (keyIndex < autoKeyConst.length || passIndex < password.length) {
+
+            if (keyIndex < autoKeyConst.length) {
+                genIndexKey = Alphabet.upper.indexOf(autoKeyConst.charAt(keyIndex));
+            } else {
+                genIndexKey = 0;
+            }
+            if (passIndex < password.length) {
+                genIndexPass = Alphabet.upper.indexOf(password.charAt(passIndex));
+            } else {
+                genIndexPass = 0;
+            }
+            const result = (genIndexKey + genIndexPass) % 26;
+            emptystring += Alphabet.upper.charAt(result); 
+        }
+        return emptystring;
 
     }
 
