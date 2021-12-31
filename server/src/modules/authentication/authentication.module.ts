@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { AuthenticationService } from "./authentication.service";
 
 
 
@@ -6,5 +7,5 @@ import { Module } from "@nestjs/common";
     imports: [],
     exports: [],
     controllers: [],
-    providers: []
+    providers: [AuthenticationService]
 }) export class AuthenticationModule {};

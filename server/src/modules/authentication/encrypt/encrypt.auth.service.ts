@@ -22,7 +22,7 @@ export class EncryptionService{
             const searchResult = this.authService.usernameLookup(userName);
             return true;
         } catch (error) {
-            throw new UnauthorizedException('Invalid credentials to execute user lookup');
+            return false;
         }
     };
 
@@ -35,7 +35,7 @@ export class EncryptionService{
             const searchResult = this.authService.passwordLookup(password);
             return true;
         } catch (error) {
-            throw new UnauthorizedException('Invalid password sent to request');
+            return false;
         }
 
     }

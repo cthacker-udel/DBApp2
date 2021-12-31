@@ -13,9 +13,10 @@ export class UserGetGuard implements CanActivate {
         const request = context.switchToHttp().getRequest();
         try{
             this.encryptService.checkUsername(request);
-            checkPassword(request);
+            this.encryptService.checkPassword(request);
+            return true;
         } catch (error) {
-            throw new UnauthorizedException('Unable to access resource, provide valid credentials');
+            return false;
         }
     };
 
