@@ -5,6 +5,7 @@ import { AddTicketRequestEntity } from "src/shared/entities/mongodb/private/post
 import { EntityTarget, getConnection, getMongoManager } from "typeorm";
 import { UpdateTicketRequestEntity } from 'src/shared/entities/mongodb/private/patch/UpdateTicketRequestEntity.entity';
 import { TicketEntity } from 'src/shared/entities/mongodb/public/TicketEntity.entity';
+import { ApiBadRequestResponse } from '@nestjs/swagger';
 
 @Injectable()
 export class DataService {
@@ -46,5 +47,20 @@ export class DataService {
             throw new BadRequestException('Invalid update ticket request');
         }
     };
+
+    async countPriorityTickets(priority: number) {
+
+        const mongoRepo = this.getMongoRepo<TicketEntity>(TicketEntity);
+        try {
+            mongoRepo.findAndCount(
+                {
+                    ticketNum: priority // temporary, should be `priority: priority` , and it is not because the priority part of the ticket has not yet been implemented
+                }
+            );
+        } catch(error) {
+            throw new BadRequestException(`Invalid Request to count tickets by priority ${priority}`);
+        }
+
+    }
 
 };
