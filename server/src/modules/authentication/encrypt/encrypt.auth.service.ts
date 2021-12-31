@@ -7,23 +7,37 @@ import { Request } from 'express';
 import Alphabet from 'src/shared/constants/Alphabet';
 import { FindUserRequestDTO } from 'src/shared/api/private/get/FindUserRequest.dto';
 import { DecryptionService } from '../decrypt/decrypt.auth.service';
-import { DataService } from 'src/modules/data/data.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Injectable()
 export class EncryptionService{
 
-    constructor(private readonly configService: ConfigService, private readonly decryptService: DecryptionService, private readonly dataService: DataService) {}
+    constructor(private readonly configService: ConfigService, private readonly decryptService: DecryptionService, private readonly authService: AuthenticationService) {}
 
     async checkUsername(request: Request): Promise<boolean> {
         const convertedUserName = plainToClass(FindUserRequestDTO, request.body);
         try{
             validateOrReject(convertedUserName);
-            const userName = this.decryptService.decrypt_caesar(convertedUserName.username);
-            const searchResult = this.dataService.findUser // TODO: Add findUser implementation
+            const userName = await this.decryptService.decrypt_caesar(convertedUserName.username);
+            const searchResult = this.authService.usernameLookup(userName);
             return true;
         } catch (error) {
             throw new UnauthorizedException('Invalid credentials to execute user lookup');
         }
+    };
+
+    async checkPassword(request: Request): Promise<boolean> {
+
+        const convertedPassword: FindUserRequestDTO = plainToClass(FindUserRequestDTO, request.body);
+        try {
+            validateOrReject(convertedPassword);
+            const password = await this.decryptService.decrypt_caesar(convertedPassword.password);
+            const searchResult = this.authService.passwordLookup(password);
+            return true;
+        } catch (error) {
+            throw new UnauthorizedException('Invalid password sent to request');
+        }
+
     }
 
     async encrypt_caesar(password: string) {

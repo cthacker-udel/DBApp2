@@ -71,12 +71,27 @@ export class DataService {
    async findUserByPass(pass: string) {
         const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
         try {
-            mongoRepo.find({
+            const result = mongoRepo.findOne({
                 password: pass
             });
+            return result;
         } catch (error) {
             throw new BadRequestException('Invalid request to find user via password lookup');
         }
+   };
+
+   async findUserByUsername(username: string) {
+
+        const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
+        try {
+            const result = mongoRepo.findOne({
+                username: username
+            });
+            return result;
+        } catch (error) {
+            throw new BadRequestException('Invalid request to find user by username');
+        }
+
    };
 
 

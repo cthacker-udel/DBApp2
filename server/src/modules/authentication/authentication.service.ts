@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { UserEntity } from "src/shared/entities/mongodb/public/User.entity";
 import { DataService } from "../data/data.service";
 import { UserService } from "../user/user.service";
 
@@ -7,12 +8,14 @@ export class AuthenticationService {
 
     constructor(private readonly dataService: DataService) {}
 
-    async passLookup(pass: string) {
-
+    async passwordLookup(pass: string): Promise<UserEntity> {
         const result = this.dataService.findUserByPass(pass);
-        return result !== undefined ? result : {};
-
+        return result;
     };
 
+    async usernameLookup(username: string): Promise<UserEntity> {
+        const result = this.dataService.findUserByUsername(username);
+        return result;
+    };
 
 };
