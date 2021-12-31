@@ -1,8 +1,12 @@
 import { Body, Controller, Get, Param, UseGuards } from "@nestjs/common";
+import { UserGetGuard } from "../authentication/guards/user.get.guard";
+import { DataService } from "../data/data.service";
 
 
 @Controller('/api')
 export class UserController {
+
+    constructor (private readonly dataService: DataService){}
 
     /*
 
@@ -32,9 +36,9 @@ export class UserController {
     */
 
     @Get('/user')
-    @UseGuards()
+    @UseGuards(UserGetGuard)
     async getUserObject(@Body() request: Request) {
-
+        
     }
 
 };
