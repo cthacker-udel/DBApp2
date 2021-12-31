@@ -6,6 +6,7 @@ import { EntityTarget, getConnection, getMongoManager } from "typeorm";
 import { UpdateTicketRequestEntity } from 'src/shared/entities/mongodb/private/patch/UpdateTicketRequestEntity.entity';
 import { TicketEntity } from 'src/shared/entities/mongodb/public/TicketEntity.entity';
 import { ApiBadRequestResponse } from '@nestjs/swagger';
+import { UserEntity } from 'src/shared/entities/mongodb/public/User.entity';
 
 @Injectable()
 export class DataService {
@@ -49,7 +50,6 @@ export class DataService {
     };
 
     async countPriorityTickets(priority: number) {
-
         const mongoRepo = this.getMongoRepo<TicketEntity>(TicketEntity);
         try {
             mongoRepo.findAndCount(
@@ -60,7 +60,26 @@ export class DataService {
         } catch(error) {
             throw new BadRequestException(`Invalid Request to count tickets by priority ${priority}`);
         }
+    };
 
-    }
+    /*
+
+        USER REQUESTS
+
+    */
+
+   async findUserByPass(pass: string) {
+        const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
+        try {
+            mongoRepo.find({
+                password: pass
+            });
+        } catch (error) {
+            throw new BadRequestException('Invalid request to find user via password lookup');
+        }
+   };
+
+
+
 
 };
