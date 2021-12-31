@@ -1,0 +1,1 @@
+// when user is trying to get user information, we decrypt the password from the server and compare it to the given one
