@@ -1,3 +1,5 @@
+import { UserEntity } from 'src/shared/entities/mongodb/User.entity';
+import { plainToClass } from 'class-transformer';
 import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from "@nestjs/common";
 import { validateOrReject } from "class-validator";
 import { AuthenticationService } from "src/modules/authentication/authentication.service";
@@ -16,17 +18,16 @@ export class UserAddPipe implements PipeTransform {
         // first check if user is logged in
 
         try {
-
             validateOrReject(value);
-            const authUserResult = await this.authService.usernameLookup(value.username);
-            if (authUserResult) {
-                
+            const authUserResult = await this.authService.usernameCount(value.username);
+            console.log('result = ', authUserResult);
+            if (authUserResult === 0) {
+                return plainToClass(UserEntity, value);
+            } else {
+                throw new BadRequestException('Invalid request to add user : User Already Exists');
             }
-
         } catch (error) {
-
             throw new BadRequestException('Invalid request to create user');
-
         }
 
     };

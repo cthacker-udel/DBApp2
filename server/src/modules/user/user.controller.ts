@@ -1,5 +1,7 @@
+import { UserEntity } from 'src/shared/entities/mongodb/User.entity';
 import { Body, Controller, Get, Param, Post, UseGuards, UsePipes } from "@nestjs/common";
 import { FindUserRequestDTO } from "src/shared/api/private/get/FindUserRequest.dto";
+import { AddUserDTO } from "src/shared/api/private/post/AddUser.dto";
 import { UserGetGuard } from "../authentication/guards/user.get.guard";
 import { DataService } from "../data/data.service";
 import { UserAddPipe } from "./pipeline/transform/user.add.pipe";
@@ -44,5 +46,14 @@ export class UserController {
     async getUserObject(@Body() request: FindUserRequestDTO) {
         return request;
     };
+
+    @Post('/user/add')
+    @UsePipes(UserAddPipe)
+    async addUser(@Body() request: UserEntity) {
+        await this.dataService.addUser(request);
+        return { "Status": "Success" };
+    };
+
+    
 
 };

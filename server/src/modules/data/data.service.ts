@@ -104,9 +104,10 @@ export class DataService {
 
    async findUserByUsername(username: string) {
 
+        console.log('finding user with username : ', username);
         const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
         try {
-            const result = mongoRepo.findOne({
+            const result = await mongoRepo.findOne({
                 username: username
             });
             return result;
@@ -116,11 +117,25 @@ export class DataService {
 
    };
 
+   async findUserCountByUsername(username: string) {
+        const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
+        try {
+
+            const result = await mongoRepo.count({
+                username: username
+            });
+            return result;
+
+        } catch (error) {
+            throw new BadRequestException('Invalid request to count # of users by username');
+        }
+   };
+
    async addUser(user: UserEntity) {
 
-        const mongoRepo = this.getMongoRepo<AddUserDTO>(AddUserDTO);
+        const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
         try {
-            const result = mongoRepo.save<UserEntity>(user);
+            const result = await mongoRepo.save<UserEntity>(user);
         } catch (error) {
             throw new BadRequestException('Invalid request to create user');
         }

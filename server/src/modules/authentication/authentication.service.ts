@@ -9,12 +9,17 @@ export class AuthenticationService {
     constructor(private readonly dataService: DataService) {}
 
     async passwordLookup(pass: string): Promise<UserEntity> {
-        const result = this.dataService.findUserByPass(pass);
+        const result = await this.dataService.findUserByPass(pass);
         return result;
     };
 
     async usernameLookup(username: string): Promise<UserEntity> {
-        const result = this.dataService.findUserByUsername(username);
+        const result = await this.dataService.findUserByUsername(username);
+        return result;
+    };
+
+    async usernameCount(username: string): Promise<number> {
+        const result = await this.dataService.findUserCountByUsername(username);
         return result;
     };
 

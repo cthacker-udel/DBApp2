@@ -4,7 +4,7 @@ import { IsString, IsNotEmpty, IsAlphanumeric, IsAscii, MinLength, MaxLength } f
 @Entity()
 export class UserEntity {
     
-    @PrimaryGeneratedColumn()
+    @ObjectIdColumn()
     id: ObjectID;
 
     @Column({ default: "Default Username", type: "string"})
