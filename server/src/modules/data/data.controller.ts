@@ -7,6 +7,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes } from "@ne
 import { FindTicketRequestEntity } from 'src/shared/entities/mongodb/private/get/FindTicketRequest.entity';
 import { AddTicketRequestEntity } from 'src/shared/entities/mongodb/private/post/AddTicketRequestEntity.entity';
 import { UpdateTicketRequestEntity } from 'src/shared/entities/mongodb/private/patch/UpdateTicketRequestEntity.entity';
+import { TicketEntity } from 'src/shared/entities/mongodb/public/TicketEntity.entity';
 
 
 
@@ -17,7 +18,8 @@ export class DataController {
 
     @Get('/public/number_of_tickets/total')
     async getNumberOfTickets() {
-        // finds number of tickets, can be public endpoint
+        console.log('running');
+        return this.dataService.countTickets();
     };
 
     @Get('/public/number_of_tickets/date/:date')
@@ -44,25 +46,25 @@ export class DataController {
     // will use guards, but for now
     @UsePipes(FindTicketPipe)
     @Post('/private/ticket/find_ticket')
-    async findTicket(@Body() body: FindTicketRequestEntity) {
+    async findTicket(@Body() body: TicketEntity) {
         await this.dataService.findTicket(body);
     };
 
     @UsePipes(DeleteTicketPipe)
     @Delete('/private/ticket/delete_ticket')
-    async deleteTicket(@Body() body: DeleteTicketRequestEntity) {
+    async deleteTicket(@Body() body: TicketEntity) {
         await this.dataService.deleteTicket(body);
     };
 
     @UsePipes(AddTicketRequestEntity)
     @Post('/private/ticket/add_ticket')
-    async addTicket(@Body() body: AddTicketRequestEntity) {
+    async addTicket(@Body() body: TicketEntity) {
         await this.dataService.addTicket(body);
     };
 
     @UsePipes(UpdateTicketPipe)
     @Patch('/private/ticket/update_ticket')
-    async updateTicket(@Body() body: UpdateTicketRequestEntity) {
+    async updateTicket(@Body() body: TicketEntity) {
         await this.dataService.updateTicket(body);
     }
 

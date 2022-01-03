@@ -1,10 +1,10 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
+import { Column, Entity, ObjectID, ObjectIdColumn, PrimaryGeneratedColumn } from "typeorm";
 import { IsString, IsNotEmpty, IsAlphanumeric, IsAscii, MinLength, MaxLength } from 'class-validator';
 
 @Entity()
 export class UserEntity {
     
-    @ObjectIdColumn()
+    @PrimaryGeneratedColumn()
     id: ObjectID;
 
     @Column({ default: "Default Username", type: "string"})

@@ -13,7 +13,20 @@ export class DataService {
 
     private getMongoRepo<T>(repo: EntityTarget<T>) { return getConnection('mongo').getRepository<T>(repo)}
 
-    async addTicket(addTicket: AddTicketRequestEntity) {
+
+    async countTickets() {
+
+        const mongoRepo = this.getMongoRepo<TicketEntity>(TicketEntity);
+        try {
+            return { "ticketCount": await mongoRepo.count() };
+        } catch (error) {
+            throw new BadRequestException('No Tickets available to be counted');
+        }
+
+    }
+
+
+    async addTicket(addTicket: TicketEntity) {
         const mongoRepo = this.getMongoRepo<TicketEntity>(TicketEntity);
         try {
             mongoRepo.insert(addTicket);
@@ -22,7 +35,7 @@ export class DataService {
         }
     };
 
-    async findTicket(findTicket: FindTicketRequestEntity) {
+    async findTicket(findTicket: TicketEntity) {
         const mongoRepo = this.getMongoRepo<TicketEntity>(TicketEntity);
         try {
             mongoRepo.find(findTicket);
@@ -31,7 +44,7 @@ export class DataService {
         }
     };
 
-    async deleteTicket(deleteTicket: DeleteTicketRequestEntity) {
+    async deleteTicket(deleteTicket: TicketEntity) {
         const mongoRepo = this.getMongoRepo<TicketEntity>(TicketEntity);
         try {
             mongoRepo.delete(deleteTicket);
@@ -40,7 +53,7 @@ export class DataService {
         }
     };
 
-    async updateTicket(updateTicket: UpdateTicketRequestEntity) {
+    async updateTicket(updateTicket: TicketEntity) {
         const mongoRepo = this.getMongoRepo<TicketEntity>(TicketEntity);
         try {
             mongoRepo.update(updateTicket, updateTicket);

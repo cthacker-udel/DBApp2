@@ -1,6 +1,4 @@
 import { Module } from "@nestjs/common";
-import { AuthenticationModule } from "../authentication/authentication.module";
-import { UserModule } from "../user/user.module";
 import { DataController } from "./data.controller";
 import { DataService } from "./data.service";
 
@@ -10,7 +8,7 @@ import { DataService } from "./data.service";
 
     imports: [],
     exports: [DataService],
-    controllers: [],
+    controllers: [DataController],
     providers: [DataService]
 
 }) export class DataModule{};
