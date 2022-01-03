@@ -13,9 +13,9 @@ export class AuthenticationService {
         return result;
     };
 
-    async usernameLookup(username: string): Promise<UserEntity> {
+    async usernameLookup(username: string): Promise<boolean> {
         const result = await this.dataService.findUserByUsername(username);
-        return result;
+        return result.findResult;
     };
 
     async usernameCount(username: string): Promise<number> {

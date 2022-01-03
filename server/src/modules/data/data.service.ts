@@ -102,15 +102,15 @@ export class DataService {
         }
    };
 
-   async findUserByUsername(username: string) {
+   async findUserByUsername(username: string): Promise<{ findResult: boolean }> {
 
         console.log('finding user with username : ', username);
         const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
         try {
-            const result = await mongoRepo.findOne({
+            const result = await mongoRepo.count({
                 username: username
             });
-            return result;
+            return { findResult: result > 0 };
         } catch (error) {
             throw new BadRequestException('Invalid request to find user by username');
         }

@@ -14,11 +14,9 @@ export class EncryptionService{
 
     constructor(private readonly configService: ConfigService, private readonly decryptService: DecryptionService, private readonly authService: AuthenticationService) {}
 
-    async checkUsername(request: Request): Promise<boolean> {
-        const convertedUserName = plainToClass(FindUserRequestDTO, request.body);
+    async checkUsername(username: string): Promise<boolean> {
         try{
-            validateOrReject(convertedUserName);
-            const userName = await this.decryptService.decrypt_caesar(convertedUserName.username);
+            const userName = await this.encrypt_caesar(username);
             const searchResult = this.authService.usernameLookup(userName);
             return true;
         } catch (error) {
