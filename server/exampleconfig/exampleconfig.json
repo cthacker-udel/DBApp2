@@ -1,0 +1,17 @@
+{
+
+    "mongo":
+    {
+        "name": "mongo",
+        "host": "choosehost",
+        "type": "mongodb",
+        "url": "exampleurl",
+        "entities": ["initialize at runtime, I did that in main.ts"]
+    },
+    "sql": {
+        "exampleconfig": "exampleconfig..."
+    },
+    "authkeys": "authkeys go here"
+
+
+}
