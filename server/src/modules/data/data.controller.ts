@@ -1,13 +1,9 @@
 import { UpdateTicketPipe } from './pipeline/updateticket.pipe';
-import { DeleteTicketRequestEntity } from './../../shared/entities/mongodb/private/delete/DeleteTicketRequest.entity';
 import { DeleteTicketPipe } from './pipeline/deleteticket.pipe';
 import { DataService } from './data.service';
 import { FindTicketPipe } from './pipeline/findticket.pipe';
 import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes } from "@nestjs/common";
-import { FindTicketRequestEntity } from 'src/shared/entities/mongodb/private/get/FindTicketRequest.entity';
-import { AddTicketRequestEntity } from 'src/shared/entities/mongodb/private/post/AddTicketRequestEntity.entity';
-import { UpdateTicketRequestEntity } from 'src/shared/entities/mongodb/private/patch/UpdateTicketRequestEntity.entity';
-import { TicketEntity } from 'src/shared/entities/mongodb/public/TicketEntity.entity';
+import { TicketEntity } from 'src/shared/entities/mongodb/TicketEntity.entity';
 
 
 
@@ -56,7 +52,7 @@ export class DataController {
         await this.dataService.deleteTicket(body);
     };
 
-    @UsePipes(AddTicketRequestEntity)
+    @UsePipes(TicketEntity)
     @Post('/private/ticket/add_ticket')
     async addTicket(@Body() body: TicketEntity) {
         await this.dataService.addTicket(body);

@@ -1,3 +1,3 @@
 - TODOLIST
-  - [] add all entities to mongo config connection, or else we cannot access them using the data service
+  - [x] add all entities to mongo config connection, or else we cannot access them using the data service
   - [] verify current verification works (caesar cipher)

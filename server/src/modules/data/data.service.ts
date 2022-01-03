@@ -1,18 +1,21 @@
-import { DeleteTicketRequestEntity } from './../../shared/entities/mongodb/private/delete/DeleteTicketRequest.entity';
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { FindTicketRequestEntity } from "src/shared/entities/mongodb/private/get/FindTicketRequest.entity";
-import { AddTicketRequestEntity } from "src/shared/entities/mongodb/private/post/AddTicketRequestEntity.entity";
 import { EntityTarget, getConnection, getMongoManager } from "typeorm";
-import { UpdateTicketRequestEntity } from 'src/shared/entities/mongodb/private/patch/UpdateTicketRequestEntity.entity';
-import { TicketEntity } from 'src/shared/entities/mongodb/public/TicketEntity.entity';
+import { TicketEntity } from 'src/shared/entities/mongodb/TicketEntity.entity';
 import { ApiBadRequestResponse } from '@nestjs/swagger';
-import { UserEntity } from 'src/shared/entities/mongodb/public/User.entity';
+import { UserEntity } from 'src/shared/entities/mongodb/User.entity';
+import { AddUserDTO } from 'src/shared/api/private/post/AddUser.dto';
 
 @Injectable()
 export class DataService {
 
     private getMongoRepo<T>(repo: EntityTarget<T>) { return getConnection('mongo').getRepository<T>(repo)}
 
+
+    /*
+
+    Public endpoints
+
+    */
 
     async countTickets() {
 
@@ -24,6 +27,12 @@ export class DataService {
         }
 
     }
+
+    /*
+
+    Ticket Requests
+
+    */
 
 
     async addTicket(addTicket: TicketEntity) {
@@ -106,6 +115,17 @@ export class DataService {
         }
 
    };
+
+   async addUser(user: UserEntity) {
+
+        const mongoRepo = this.getMongoRepo<AddUserDTO>(AddUserDTO);
+        try {
+            const result = mongoRepo.save<UserEntity>(user);
+        } catch (error) {
+            throw new BadRequestException('Invalid request to create user');
+        }
+
+   }
 
 
 

@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { UserEntity } from "src/shared/entities/mongodb/public/User.entity";
+import { UserEntity } from "src/shared/entities/mongodb/User.entity";
 import { DataService } from "../data/data.service";
 import { UserService } from "../user/user.service";
 

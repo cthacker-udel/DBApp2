@@ -2,7 +2,7 @@ import { validateOrReject } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { DeleteTicketRequestDTO } from './../../../shared/api/private/delete/DeleteTicketRequest.dto';
 import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from "@nestjs/common";
-import { DeleteTicketRequestEntity } from 'src/shared/entities/mongodb/private/delete/DeleteTicketRequest.entity';
+import { TicketEntity } from 'src/shared/entities/mongodb/TicketEntity.entity';
 
 
 
@@ -13,7 +13,7 @@ export class DeleteTicketPipe implements PipeTransform {
 
         try {
             validateOrReject(value);
-            return plainToClass(DeleteTicketRequestEntity, value);
+            return plainToClass(TicketEntity, value);
         } catch (error) {
             throw new BadRequestException("Invalid Delete Ticket Request Sent -- failed at pipe");
         }

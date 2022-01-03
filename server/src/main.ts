@@ -3,8 +3,8 @@ import { NestFactory } from '@nestjs/core';
 import { ConnectionOptions, createConnection } from 'typeorm';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { TicketEntity } from './shared/entities/mongodb/public/TicketEntity.entity';
-import { UserEntity } from './shared/entities/mongodb/public/User.entity';
+import { TicketEntity } from './shared/entities/mongodb/TicketEntity.entity';
+import { UserEntity } from './shared/entities/mongodb/User.entity';
 const cors = require('cors');
 const development = require('../config/development.json');
 

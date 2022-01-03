@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, UseGuards, UsePipes } from "@nestjs
 import { FindUserRequestDTO } from "src/shared/api/private/get/FindUserRequest.dto";
 import { UserGetGuard } from "../authentication/guards/user.get.guard";
 import { DataService } from "../data/data.service";
+import { UserAddPipe } from "./pipeline/transform/user.add.pipe";
 import { UserGetPipe } from "./pipeline/transform/user.get.pipe";
 
 
@@ -37,7 +38,7 @@ export class UserController {
 
     */
 
-    @Post('/user')
+    @Post('/user/find')
     @UseGuards(UserGetGuard)
     @UsePipes(UserGetPipe)
     async getUserObject(@Body() request: FindUserRequestDTO) {
