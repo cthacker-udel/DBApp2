@@ -22,6 +22,7 @@ export class UserController {
     @Get('/users/total/all')
     async getTotalNumberOfUsers() {
         // get total number of users in the current server
+        return await this.dataService.
     };
 
     @Get('/users/total/active/today')

@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Col, Container, Row, Form, Button } from 'react-bootstrap';
 
 export const LandingPage = () => {
+
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
+    const verifyUser = (theUsername: string, thePassword: string) => {
+
+
+
+    }
 
     return(
         <>
@@ -29,7 +38,12 @@ export const LandingPage = () => {
                                 <br />
                                 <Row className="col-md-5 mx-auto" >
                                     <Col style={{ textAlign: 'center', display: 'block'}} >
-                                        <Button variant="outline-primary">Login</Button>
+                                        <Button variant="outline-primary" onClick={() => {
+
+                                            verifyUser(username, password);
+                                        }
+
+                                        }>Login</Button>
                                     </Col>
                                 </Row>
                                 <br />

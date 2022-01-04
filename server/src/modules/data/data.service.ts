@@ -140,7 +140,18 @@ export class DataService {
             throw new BadRequestException('Invalid request to create user');
         }
 
-   }
+   };
+
+   async getTotalUserCount() {
+
+        const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
+        try {
+            const result = await mongoRepo.count();
+        } catch (error) {
+            throw new BadRequestException('Invalid request to count users');
+        }
+
+   };
 
 
 
