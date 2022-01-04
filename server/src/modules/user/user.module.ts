@@ -3,6 +3,7 @@ import { Module } from "@nestjs/common";
 import { AuthenticationModule } from "../authentication/authentication.module";
 import { UserController } from "./user.controller";
 import { DataService } from '../data/data.service';
+import { ValidateUserPipe } from './pipeline/validation/validateuser.pipe';
 
 
 
@@ -11,6 +12,6 @@ import { DataService } from '../data/data.service';
     imports: [AuthenticationModule, DataModule],
     exports: [],
     controllers: [UserController],
-    providers: []
+    providers: [ValidateUserPipe]
 
 }) export class UserModule{};

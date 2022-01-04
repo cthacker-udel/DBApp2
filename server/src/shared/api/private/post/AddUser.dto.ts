@@ -15,4 +15,9 @@ export class AddUserDTO {
     @MinLength(5)
     password: string
 
+    @IsString()
+    @IsNotEmpty()
+    @MinLength(1)
+    role: string
+
 };

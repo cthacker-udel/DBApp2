@@ -6,6 +6,7 @@ import { UserGetGuard } from "../authentication/guards/user.get.guard";
 import { DataService } from "../data/data.service";
 import { UserAddPipe } from "./pipeline/transform/user.add.pipe";
 import { UserGetPipe } from "./pipeline/transform/user.get.pipe";
+import { AddUserGuard } from './guard/adduser.guard';
 
 
 @Controller('/api')
@@ -22,7 +23,7 @@ export class UserController {
     @Get('/users/total/all')
     async getTotalNumberOfUsers() {
         // get total number of users in the current server
-        return await this.dataService.
+        return await this.dataService.getTotalUserCount();
     };
 
     @Get('/users/total/active/today')
@@ -49,6 +50,7 @@ export class UserController {
     };
 
     @Post('/user/add')
+    @UseGuards(AddUserGuard)
     @UsePipes(UserAddPipe)
     async addUser(@Body() request: UserEntity) {
         await this.dataService.addUser(request);
