@@ -2,7 +2,7 @@ import { UserEntity } from 'src/shared/entities/mongodb/User.entity';
 import { Body, Controller, Get, Param, Post, UseGuards, UsePipes } from "@nestjs/common";
 import { FindUserRequestDTO } from "src/shared/api/private/get/FindUserRequest.dto";
 import { AddUserDTO } from "src/shared/api/private/post/AddUser.dto";
-import { UserGetGuard } from "../authentication/guards/user.get.guard";
+import { UserGetGuard } from "./guard/user.get.guard";
 import { DataService } from "../data/data.service";
 import { UserAddPipe } from "./pipeline/transform/user.add.pipe";
 import { UserGetPipe } from "./pipeline/transform/user.get.pipe";
