@@ -102,7 +102,7 @@ export class DataService {
         }
    };
 
-   async findUserByUsername(username: string): Promise<{ findResult: boolean }> {
+   async verifyUserByUsername(username: string): Promise<{ findResult: boolean }> {
 
         console.log('finding user with username : ', username);
         const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
@@ -112,10 +112,26 @@ export class DataService {
             });
             return { findResult: result > 0 };
         } catch (error) {
-            throw new BadRequestException('Invalid request to find user by username');
+            throw new BadRequestException('Invalid request to verify user by username');
         }
 
    };
+
+   async findUserEntityByUsername(user: AddUserDTO): Promise<UserEntity> {
+
+        const username = user.username;
+        console.log('finding user with username : ', username);
+        const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
+        try {
+            const result = await mongoRepo.findOne({
+                username: username
+            });
+            return result;
+        } catch (error) {
+            throw new BadRequestException('Invalid request to find user by username');
+        }
+
+   }
 
    async findUserCountByUsername(username: string) {
         const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);

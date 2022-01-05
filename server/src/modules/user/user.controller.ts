@@ -1,5 +1,5 @@
 import { UserEntity } from 'src/shared/entities/mongodb/User.entity';
-import { Body, Controller, Get, Param, Post, UseGuards, UsePipes } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, UseGuards, UsePipes } from "@nestjs/common";
 import { FindUserRequestDTO } from "src/shared/api/private/get/FindUserRequest.dto";
 import { AddUserDTO } from "src/shared/api/private/post/AddUser.dto";
 import { UserGetGuard } from "./guard/user.get.guard";
@@ -7,6 +7,8 @@ import { DataService } from "../data/data.service";
 import { UserAddPipe } from "./pipeline/transform/user.add.pipe";
 import { UserGetPipe } from "./pipeline/transform/user.get.pipe";
 import { AddUserGuard } from './guard/adduser.guard';
+import { DeleteUserGuard } from './guard/deleteuser.guard';
+import { UserDeletePipe } from './pipeline/transform/user.delete.pipe';
 
 
 @Controller('/api')
@@ -56,6 +58,14 @@ export class UserController {
         await this.dataService.addUser(request);
         return { "Status": "Success" };
     };
+
+    @Delete('/user/remove')
+    @UseGuards(DeleteUserGuard)
+    @UsePipes(UserDeletePipe)
+    async deleteUser(@Body() request: UserEntity) {
+        await this.dataService.findUserEntityByUsername(request)
+        return { "Status", "Success" };
+    }
 
     
 
