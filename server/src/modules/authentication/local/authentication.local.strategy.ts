@@ -31,8 +31,7 @@ export class BasicLocalStrategy extends PassportStrategy(Strategy) {
             return null;
         }
 
-    }
+    };
 
 
-
-}
+};
