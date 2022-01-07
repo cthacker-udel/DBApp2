@@ -62,9 +62,16 @@ export class UserController {
     @Delete('/user/remove')
     @UseGuards(DeleteUserGuard)
     @UsePipes(UserDeletePipe)
-    async deleteUser(@Body() request: UserEntity) {
-        await this.dataService.findUserEntityByUsername(request)
-        return { "Status", "Success" };
+    async deleteUser(@Body() request: AddUserDTO) {
+        try {
+            await this.dataService.findUserEntityByUsername(request)
+            await this.dataService.
+        } catch (error) {
+
+
+
+        }
+        return { "Status": "Success" };
     }
 
     

@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { EntityTarget, getConnection, getMongoManager } from "typeorm";
+import { DeleteResult, EntityTarget, getConnection, getMongoManager } from "typeorm";
 import { TicketEntity } from 'src/shared/entities/mongodb/TicketEntity.entity';
 import { ApiBadRequestResponse } from '@nestjs/swagger';
 import { UserEntity } from 'src/shared/entities/mongodb/User.entity';
@@ -166,6 +166,27 @@ export class DataService {
             throw new BadRequestException('Invalid request to count users');
         }
    };
+
+   async deleteUser(user: UserEntity) {
+
+        const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
+        try {
+            const result: DeleteResult = await mongoRepo.delete({
+                username: user.username,
+                id: user.id
+            });
+            if (result.affected > 0) {
+                // Success
+                return { "Status": "Deleted" };
+            } else {
+                throw new BadRequestException("Invalid Delete Request");
+            }
+            
+        } catch (error) {
+            throw new BadRequestException("Invalid Delete Request");
+        }
+
+   }
 
 
 
