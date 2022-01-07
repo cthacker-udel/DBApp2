@@ -1,4 +1,4 @@
-import { UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { validateOrReject } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
@@ -24,7 +24,23 @@ export class EncryptionService{
         }
     };
 
-    async checkPassword(request: Request): Promise<boolean> {
+    async checkPassword(password: string): Promise<boolean> {
+
+        try {
+            const encryptedPass = await this.encrypt_caesar(password);
+            const result = await this.authService.passwordLookup(encryptedPass);
+            if (result) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            throw new BadRequestException("Invalid Request");
+        }
+
+    };
+
+    async checkPasswordViaRequest(request: Request): Promise<boolean> {
 
         const convertedPassword: FindUserRequestDTO = plainToClass(FindUserRequestDTO, request.body);
         try {
@@ -36,7 +52,7 @@ export class EncryptionService{
             return false;
         }
 
-    }
+    };
 
     async encrypt_caesar(password: string) {
 
@@ -61,7 +77,7 @@ export class EncryptionService{
         }
         return emptyString;
 
-    }
+    };
 
 
     async encrypt_autokey(password: string) {
@@ -92,7 +108,7 @@ export class EncryptionService{
         }
         return emptystring;
 
-    }
+    };
 
 
 }

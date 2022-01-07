@@ -1,5 +1,5 @@
 import { UserEntity } from 'src/shared/entities/mongodb/User.entity';
-import { Body, Controller, Delete, Get, Param, Post, UseGuards, UsePipes } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, UseGuards, UsePipes } from "@nestjs/common";
 import { FindUserRequestDTO } from "src/shared/api/private/get/FindUserRequest.dto";
 import { AddUserDTO } from "src/shared/api/private/post/AddUser.dto";
 import { UserGetGuard } from "./guard/user.get.guard";
@@ -64,12 +64,10 @@ export class UserController {
     @UsePipes(UserDeletePipe)
     async deleteUser(@Body() request: AddUserDTO) {
         try {
-            await this.dataService.findUserEntityByUsername(request)
-            await this.dataService.
+            const userResult = await this.dataService.findUserEntityByDTO(request)
+            await this.dataService.deleteUser(userResult);
         } catch (error) {
-
-
-
+            throw new BadRequestException("Invalid Request Sent");
         }
         return { "Status": "Success" };
     }

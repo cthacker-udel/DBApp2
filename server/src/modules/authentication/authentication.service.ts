@@ -14,13 +14,24 @@ export class AuthenticationService {
     };
 
     async usernameLookup(username: string): Promise<boolean> {
-        const result = await this.dataService.findUserByUsername(username);
+        const result = await this.dataService.verifyUserByUsername(username);
         return result.findResult;
     };
 
     async usernameCount(username: string): Promise<number> {
         const result = await this.dataService.findUserCountByUsername(username);
         return result;
+    };
+
+    async getUserEntity(username: string): Promise<UserEntity> {
+
+        const result = await this.dataService.findUserByUsername(username);
+        if (result)  {
+            return result;
+        } else {
+            return null;
+        }
+
     };
 
 };

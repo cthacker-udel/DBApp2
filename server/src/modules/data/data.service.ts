@@ -90,7 +90,17 @@ export class DataService {
 
     */
 
-   async findUserByPass(pass: string) {
+    async getTotalUserCount(): Promise<number> {
+        const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
+        try {
+            const result = await mongoRepo.count();
+            return result;
+        } catch (error) {
+            throw new BadRequestException('Invalid request to count users');
+        }
+    };
+
+   async findUserByPass(pass: string): Promise<UserEntity> {
         const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
         try {
             const result = mongoRepo.findOne({
@@ -117,7 +127,7 @@ export class DataService {
 
    };
 
-   async findUserEntityByUsername(user: AddUserDTO): Promise<UserEntity> {
+   async findUserEntityByDTO(user: AddUserDTO): Promise<UserEntity> {
 
         const username = user.username;
         console.log('finding user with username : ', username);
@@ -131,7 +141,23 @@ export class DataService {
             throw new BadRequestException('Invalid request to find user by username');
         }
 
-   }
+   };
+
+   async findUserByUsername(username: string): Promise<UserEntity> {
+
+    const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
+    try {
+        const result = await mongoRepo.findOne(
+            {
+                username: username
+            }
+        );
+        return result;
+    } catch (error) {
+        throw new BadRequestException("Invalid Request to find user via username");
+    }
+
+   };
 
    async findUserCountByUsername(username: string) {
         const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
@@ -158,15 +184,6 @@ export class DataService {
 
    };
 
-   async getTotalUserCount() {
-        const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
-        try {
-            const result = await mongoRepo.count();
-        } catch (error) {
-            throw new BadRequestException('Invalid request to count users');
-        }
-   };
-
    async deleteUser(user: UserEntity) {
 
         const mongoRepo = this.getMongoRepo<UserEntity>(UserEntity);
@@ -181,12 +198,10 @@ export class DataService {
             } else {
                 throw new BadRequestException("Invalid Delete Request");
             }
-            
         } catch (error) {
             throw new BadRequestException("Invalid Delete Request");
         }
-
-   }
+   };
 
 
 
