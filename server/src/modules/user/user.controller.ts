@@ -72,6 +72,19 @@ export class UserController {
         return { "Status": "Success" };
     }
 
+    @Delete('/user/remove/bulk')
+    async deleteUserBulk(@Body() request: AddUserDTO[]) {
+        try {
+            request.forEach(async (eachUser) => {
+                const userResult = await this.dataService.findUserEntityByDTO(eachUser);
+                await this.dataService.deleteUser(userResult);
+            })
+        } catch (error) {
+            throw new BadRequestException("Invalid Bulk Delete Request");
+        }
+        return { "Status": "Success"};
+    }
+
     
 
 };
